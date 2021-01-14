@@ -1,0 +1,41 @@
+---
+title: "Gender and 20th Century Tate Artists"
+author: "JTP"
+date: "1/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library (tidyverse)
+library (janitor)
+library (treemapify)
+library (kableExtra)
+
+#read in data
+
+artwork <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-12/artwork.csv')
+artists <- readr::read_csv("https://github.com/tategallery/collection/raw/master/artist_data.csv")
+
+
+#changing artists$name to artists$artist so it is the same between files
+artists$artist <- artists$name
+
+#merging files, keep only 20th century artists, select variables
+merged <- merge (artwork, artists, by = "artist") %>%
+  filter (yearOfBirth >= 1900) %>%
+  select (artist, yearOfBirth, gender)
+```
+
+Tate Artists born in 20th Century are Male
+
+```{r table with gender counts, message=FALSE}
+gen_count <- merged %>%
+  group_by (gender) %>%
+  summarize (n = n()) %>% 
+  mutate (percent = scales::percent (n/16172)) 
+
+kable (gen_count)
+```
+
+
+
