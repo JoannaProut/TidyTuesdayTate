@@ -53,5 +53,4 @@ ftree <- ggplot (f, aes (area = n, label = label)) +
   geom_treemap (fill = "darksalmon", color = "white") +
   geom_treemap_text (color = "white") +
   labs (title = "Female Artists")
-ftree
-ftree
+
