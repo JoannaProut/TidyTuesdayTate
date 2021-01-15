@@ -3,7 +3,14 @@
 
 library (tidyverse)
 library (treemapify)
+library (showtext)
+library (sysfonts)
 
+## Loading Google fonts (https://fonts.google.com/)
+font_add_google("Fraunces", "Fraunces")
+
+## Automatically use showtext to render text
+showtext_auto()
 
 #read in data
 artwork <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-12/artwork.csv')
@@ -33,12 +40,12 @@ f$label <- paste (f$artist, f$n, sep = ", ")
 #treemap
 ggplot (f, aes (area = n, fill = artist, label = label)) +
   geom_treemap ()+
-  geom_treemap_text (color = "black", family = "sans") +
+  geom_treemap_text (color = "black", family = "Fraunces") +
   labs (title = "Most Represented Women Artists at the Tate",
         subtitle = "\n The Tate Modern houses the United Kingdom's national collection of British Art \n in addition to modern and contemporary art from across the world.\n \n  Only 16% of artists represented are female. \n \n This chart highlights the women with the greatest numbers of works in the collection. \n ",
         caption ="\nSource: Tate Art Museum | Graphic: @joieprout" ) +
    theme(
-    text = element_text(family = "sans", size = 12), 
+    text = element_text(family = "Fraunces", size = 12), 
     plot.title = element_text(size = 18),
     plot.caption = element_text(size = 12),
     legend.position = "none",
