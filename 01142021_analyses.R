@@ -2,9 +2,8 @@
 #Artists and Artwork from the Tate Gallery
 
 library (tidyverse)
-library (janitor)
 library (treemapify)
-library (kableExtra)
+
 
 #read in data
 artwork <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-01-12/artwork.csv')
@@ -33,11 +32,16 @@ f$label <- paste (f$artist, f$n, sep = ", ")
 
 #treemap
 ggplot (f, aes (area = n, fill = artist, label = label)) +
-  geom_treemap(radius = grid::unit(0.15, "cm"), color = "white", start = "topleft") +
-  geom_treemap_text (color = "white") +
+  geom_treemap ()+
+  geom_treemap_text (color = "black", family = "sans") +
   labs (title = "Most Represented Women Artists at the Tate",
-        subtitle = "The Tate Modern houses the United Kingdom's national collection of British Art
-        in addition to modern and contemporary art from across the world. Only 16% of artists represented are female.  
-        This chart highlights the artists who are women with the greatest numbers of work in the collection.",
+        subtitle = "\n The Tate Modern houses the United Kingdom's national collection of British Art \n in addition to modern and contemporary art from across the world.\n \n  Only 16% of artists represented are female. \n \n This chart highlights the women with the greatest numbers of works in the collection. \n ",
         caption ="\nSource: Tate Art Museum | Graphic: @joieprout" ) +
-  theme (legend.position = "none")
+   theme(
+    text = element_text(family = "sans", size = 12), 
+    plot.title = element_text(size = 18),
+    plot.caption = element_text(size = 12),
+    legend.position = "none",
+    plot.margin=unit(c(0.5,0.5,0.5, 0.5),"cm")
+  )
+    
