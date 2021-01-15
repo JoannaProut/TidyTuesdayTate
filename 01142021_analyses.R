@@ -4,10 +4,9 @@
 library (tidyverse)
 library (treemapify)
 library (showtext)
-library (sysfonts)
 
 ## Loading Google fonts (https://fonts.google.com/)
-font_add_google("Fraunces", "Fraunces")
+font_add_google("Montserrat")
 
 ## Automatically use showtext to render text
 showtext_auto()
@@ -22,7 +21,7 @@ artists$artist <- artists$name
 #merging files, keep only artists born during or after the 20th century, select variables
 merged <- merge (artwork, artists, by = "artist") 
 
-#selecting the 10 female artists with the most works in Tate
+#selecting female artists with the most works in Tate
 f <- merged %>%
   filter (gender == "Female") %>%
   select (artist, gender) %>%
@@ -40,15 +39,16 @@ f$label <- paste (f$artist, f$n, sep = ", ")
 #treemap
 ggplot (f, aes (area = n, fill = artist, label = label)) +
   geom_treemap ()+
-  geom_treemap_text (color = "black", family = "Fraunces") +
+  geom_treemap_text (color = "black", family = "Montserrat", size = 11) +
   labs (title = "Most Represented Women Artists at the Tate",
-        subtitle = "\n The Tate Modern houses the United Kingdom's national collection of British Art \n in addition to modern and contemporary art from across the world.\n \n  Only 16% of artists represented are female. \n \n This chart highlights the women with the greatest numbers of works in the collection. \n ",
+        subtitle = "\n The Tate Modern houses the UK's national collection of British Art \n in addition to modern and contemporary art from across the world.\n \n  Only 16% of artists represented are female. \n \n This chart highlights the women with the greatest numbers of works. \n ",
         caption ="\nSource: Tate Art Museum | Graphic: @joieprout" ) +
    theme(
-    text = element_text(family = "Fraunces", size = 12), 
-    plot.title = element_text(size = 18),
-    plot.caption = element_text(size = 12),
+    text = element_text(family = "Montserrat", size = 12), 
+    plot.title = element_text(size = 18, face = "bold"),
+    plot.caption = element_text(size = 10),
     legend.position = "none",
     plot.margin=unit(c(0.5,0.5,0.5, 0.5),"cm")
-  )
+   ) +
+  scale_fill_brewer(palette ="BuPu") 
     
